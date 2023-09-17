@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arithmeta</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+            background-image: url(desktopBackground.jpg);
+            background-size: 100% auto;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        #logo-container {
+
+            text-align: center;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        #logo {
+
+            width: 250px;
+
+        }
+
+        #game-container {
+
+            background-color: transparent;
+            padding-left: 200px;
+            padding-right: 200px;
+            padding-top: 10px;
+            width: 900px;
+            margin: 0 auto;
+            margin-top: -120px; 
+            color: white;
+            font-family: "Pacifico", cursive;
+            font-size: 30px;
+            position: relative; 
+
+        }
+
+        #equation {
+
+            font-size: 36px;
+            margin: 20px 0;
+            color: white;
+            display: inline-block;
+            border: 2px solid white;
+            padding: 5px 10px; 
+
+        }
+
+        #answerPart {
+
+            font-size: 24px;
+            margin-top: -10px;
+            display: inline-block; 
+
+        }
+
+        #answer {
+
+            font-size: 24px;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid #333;
+            width: 200px;
+            text-align: center;
+            outline: none;
+            background-color: transparent;
+            color: white;
+
+        }
+
+        #answer:focus {
+
+            border-bottom: 2px solid #007bff;
+
+        }
+
+        #submit-button {
+
+            font-size: 20px;
+            background-color: transparent;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+
+        }
+
+        #submit-button img {
+
+            width: 150px;
+            margin-bottom: -50px;
+
+        }
+
+
+        #timer {
+
+            font-size: 24px;
+            color: white;
+            padding-top: 10px;
+
+        }
+
+        #score {
+
+            font-size: 24px;
+            color: yellow;
+
+        }
+
+        #result {
+
+            font-size: 24px;
+            margin-top: 10px;
+
+        }
+
+        #result.correct {
+
+            color: #28a745;
+            animation: correct-animation 1s ease-in-out;
+
+        }
+
+        #result.incorrect {
+
+            color: #dc3545;
+
+        }
+
+        #game-over {
+
+            font-size: 24px;
+            margin-top: 20px;
+
+        }
+
+        @keyframes correct-animation {
+
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+
+        }
+
+        #start-button, #restart-button {
+            font-size: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #start-button:hover, #restart-button:hover {
+            background-color: #0056b3;
+        }
+
+        #start-button:active, #restart-button:active {
+            background-color: #0056b3;
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+
+        body {
+
+            background-image: url(mobileBackground.jpg);
+            background-size: 100% auto;
+
+        }
+
+        #game-container {
+
+            width: auto;
+            padding: 10px;
+
+        }
+
+        #equation {
+
+            font-size: 24px;
+            margin: 10px 0;
+
+        }
+
+        #answerPart {
+
+            font-size: 20px;
+            margin-top: -10px;
+
+        }
+
+        #answer {
+
+            font-size: 18px;
+            padding: 5px;
+            width: 120px;
+            text-align: center;
+
+        }
+
+        #submit-button {
+
+            font-size: 16px;
+            padding: 8px 16px;
+            margin-top: 10px;
+
+        }
+
+        #submit-button img {
+
+            width: 130px;
+            margin-bottom: -40px;
+
+        }
+
+        #timer, #score, #result, #game-over {
+
+            font-size: 15px;
+            margin-top: 10px;
+
+        }
+
+        #start-button, #restart-button {
+
+            font-size: 15px;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+
+        }
+
+        #start-button img {
+
+            width: 100px;
+            margin-bottom: -30px;
+
+        }
+
+        }
+
+        @keyframes correct-animation {
+
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+
+        }
+
+        #start-button:hover, #restart-button:hover {
+
+        background-color: #0056b3;
+
+        }
+
+        #start-button:active, #restart-button:active {
+
+        background-color: #0056b3;
+        transform: scale(0.95);
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="logo-container">
+        <h1><img src="logo.png" id="logo"></h1>
+    </div>
+    
+    <div id="game-container">
+        <div id="start-button-container">
+            <button id="start-button">Start Game</button>
+        </div>
+        <div id="game-content" style="display: none;"> <button id="restart-button">Restart Game</button>
+            <p>Time left: <br><span id="timer">23</span> seconds</p> 
+            <p>Score: <span id="score">0</span></p> 
+            <p id="equation"></p>
+            <p id="answerPart">=<input type="text" id="answer" placeholder="Your answer"><button id="submit-button"><img src="submit.png"></button></p> 
+            <p id="result"></p>
+            <p id="game-over"></p>
+        </div>
+        
+    </div>
+
+    <script>
+
+        let timerElement = document.getElementById('timer');
+        let scoreElement = document.getElementById('score');
+        let equationElement = document.getElementById('equation');
+        let answerElement = document.getElementById('answer');
+        let resultElement = document.getElementById('result');
+        let gameOverElement = document.getElementById('game-over');
+
+        let timer = 23;
+        let score = 0;
+        let interval;
+
+        function startGame() {
+            
+            document.getElementById('start-button-container').style.display = 'none';
+            document.getElementById('game-content').style.display = 'block';
+
+            
+            timer = 59;
+            score = 0;
+            answerElement.disabled = false;
+            gameOverElement.textContent = '';
+
+            generateEquation();
+            interval = setInterval(updateTimer, 1000);
+        }
+
+        function restartGame() {
+
+            document.getElementById('restart-button-container').style.display = 'none';
+            document.getElementById('game-content').style.display = 'block';
+
+            timer = 59;
+            score = 0;
+            answerElement.disabled = false;
+            gameOverElement.textContent = '';
+
+            generateEquation();
+            interval = setInterval(updateTimer, 1000);
+        }
+
+        function endGame() {
+
+            clearInterval(interval);
+            answerElement.disabled = true;
+            gameOverElement.textContent = `Game over! Your score: ${score}`;
+            
+            document.getElementById('restart-button-container').style.display = 'block';
+
+        }
+
+        function generateEquation() {
+
+            const num1 = Math.floor(Math.random() * 100); 
+            const num2 = Math.floor(Math.random() * 100); 
+            const operators = ['+', '-', '*', '/'];
+            const operator = operators[Math.floor(Math.random() * operators.length)];
+            
+            equationElement.textContent = `${num1} ${operator} ${num2}`;
+            answerElement.value = ''; 
+
+        }
+
+        function updateTimer() {
+
+            if (timer > 0) {
+                timer--;
+                timerElement.textContent = timer;
+            } else {
+                endGame();
+            }
+
+        }
+
+        function checkAnswer() {
+
+            const equationText = equationElement.textContent;
+            const userAnswer = answerElement.value;
+            
+            try {
+                const correctAnswer = eval(equationText);
+                
+                if (userAnswer == correctAnswer) {
+                    score++;
+                    scoreElement.textContent = score;
+                    resultElement.textContent = 'Correct!';
+                    resultElement.classList.add('correct');
+                } else {
+                    resultElement.textContent = 'Incorrect!';
+                    resultElement.classList.remove('correct');
+                }
+            } catch (error) {
+                resultElement.textContent = 'Error!';
+                resultElement.classList.remove('correct');
+            }
+
+            generateEquation();
+
+        }
+
+        document.getElementById('start-button').addEventListener('click', startGame);
+        document.getElementById('restart-button').addEventListener('click', restartGame);
+
+        document.getElementById('submit-button').addEventListener('click', checkAnswer);
+
+        answerElement.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        // AirCav
+
+    </script>
+
+</body>
+</html>
